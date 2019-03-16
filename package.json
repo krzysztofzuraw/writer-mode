@@ -1,38 +1,41 @@
 {
-	"name": "writer-mode",
-	"displayName": "Writer Mode",
-	"description": "Mode for focused plain-text writing",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.32.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-		"onCommand:extension.helloWorld"
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "npm run compile && node ./node_modules/vscode/bin/test"
-	},
-	"devDependencies": {
-		"typescript": "3.3.3333",
-		"vscode": "1.1.30",
-		"tslint": "5.13.1",
-		"@types/node": "10.12.30",
-		"@types/mocha": "2.2.48"
-	}
+  "name": "writer-mode",
+  "displayName": "Writer Mode",
+  "description": "Mode for focused plain-text writing",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.writerModeOn"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.writerModeOn",
+        "title": "Writer mode: Activate"
+      },
+      {
+        "command": "extension.writerModeOff",
+        "title": "Writer mode: Deactivate"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "type:check": "npm run compile -- --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "3.3.3333",
+    "vscode": "1.1.30",
+    "tslint": "5.14.0",
+    "@types/node": "11.11.3"
+  }
 }
