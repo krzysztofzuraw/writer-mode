@@ -2,7 +2,7 @@
 
 Distraction free plain text editing in VSCode.
 
-![Imgur](https://i.imgur.com/WV3xmUC.gifv)
+![Imgur](https://i.imgur.com/33zYvoE.gif)
 
 To activate use `cmd+shift+p` and type: `Writer mode: Activate`.
 
