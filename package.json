@@ -2,7 +2,19 @@
   "name": "writer-mode",
   "displayName": "Writer Mode",
   "description": "Mode for focused plain-text writing",
-  "version": "0.0.1",
+  "publisher": "noaal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krzysztofzuraw/writer-mode"
+  },
+  "author": {
+    "name": "Krzysztof Żuraw <noaaln@fastmail.com> (https://krzysztofzuraw.com)"
+  },
+  "bugs": {
+    "url": "https://github.com/krzysztofzuraw/writer-mode/issues"
+  },
+  "license": "MIT",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.32.0"
   },
