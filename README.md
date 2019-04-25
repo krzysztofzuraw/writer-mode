@@ -15,6 +15,8 @@ What this extension is doing under the hood:
 - activate zen mode
 - increase font size to 20
 - disables VSCode rules
+- highlights current line: to enable set `writerMode.highlightCurrentLine` to `true` in vs code settings
+- customize color of current line highlight by setting `writerMode.highlightBorderColor` to color in hex format - like `#fff`
 
 All those setting changes are first applied to workspace settings and in
 case of not having workspace extension will override global settings.

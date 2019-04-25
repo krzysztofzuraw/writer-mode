@@ -35,7 +35,20 @@
         "command": "extension.writerModeOff",
         "title": "Writer mode: Deactivate"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Writer mode highlight settings",
+      "properties": {
+        "writerMode.highlightCurrentLine": {
+          "type": "boolean",
+          "default": false
+        },
+        "writerMode.highlightBorderColor": {
+          "type": "string",
+          "default": "#fff"
+        }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
