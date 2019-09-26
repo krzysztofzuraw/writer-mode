@@ -58,7 +58,7 @@
     "type:check": "npm run compile -- --noEmit"
   },
   "devDependencies": {
-    "typescript": "3.6.2",
+    "typescript": "3.6.3",
     "vscode": "1.1.36",
     "tslint": "5.20.0",
     "@types/node": "11.13.13"
