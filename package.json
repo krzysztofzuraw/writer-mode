@@ -60,7 +60,7 @@
   "devDependencies": {
     "typescript": "3.6.2",
     "vscode": "1.1.36",
-    "tslint": "5.17.0",
+    "tslint": "5.20.0",
     "@types/node": "11.13.13"
   }
 }
