@@ -37,15 +37,30 @@
       }
     ],
     "configuration": {
-      "title": "Writer mode highlight settings",
+      "title": "Writer mode",
       "properties": {
-        "writerMode.highlightCurrentLine": {
-          "type": "boolean",
-          "default": false
+        "writerMode.overrideSettings": {
+          "type": "object",
+          "default": {
+            "editor.fontSize": 20,
+            "editor.rulers": [],
+            "editor.renderLineHighlight": "line",
+            "workbench.colorCustomizations": {
+              "editor.lineHighlightBorder": "#fff"
+            }
+          }
         },
-        "writerMode.highlightBorderColor": {
-          "type": "string",
-          "default": "#fff"
+        "writerMode.executeOnActivate": {
+          "type": "array",
+          "default": [
+            "workbench.action.toggleZenMode"
+          ]
+        },
+        "writerMode.executeOnDeactivate": {
+          "type": "array",
+          "default": [
+            "workbench.action.exitZenMode"
+          ]
         }
       }
     }

@@ -1,22 +1,45 @@
 import * as vscode from "vscode";
 
-const RULERS_SECTION = "editor.rulers";
-const FONTSIZE_SECTION = "editor.fontSize";
-const LINE_HIGHLIGHT_SECTION = "editor.renderLineHighlight";
-const COLOR_CUSTOMIZATION_SECTION = "workbench.colorCustomizations";
+type Setting = string | number | undefined | object;
+
+const settingsToBringBack: Array<{
+  key: string;
+  setting: Setting;
+}> = [];
 
 export function activate(context: vscode.ExtensionContext) {
   const activateCommand = vscode.commands.registerCommand(
     "extension.writerModeOn",
     () => {
-      // Display a message box to the user
       vscode.window.showInformationMessage("Writer mode is on.");
-      // Activate zen mode
-      vscode.commands.executeCommand("workbench.action.toggleZenMode");
-      const highlightColor = vscode.workspace
+      const settingsToOverride = vscode.workspace
         .getConfiguration("writerMode")
-        .get<string>("highlightBorderColor");
-      overrideEditorSettings([], 20, "line", highlightColor);
+        .get<{ [key: string]: Setting }>("overrideSettings");
+
+      if (settingsToOverride) {
+        const isInsideWorkspace = vscode.workspace.workspaceFolders;
+        const config = vscode.workspace.getConfiguration();
+        Object.entries(settingsToOverride).map(([key, setting]) => {
+          settingsToBringBack.push({ key, setting: config.get(key) });
+          config.update(
+            key,
+            typeof setting === "object" ? { ...setting } : setting, // hack to unpack proxy
+            isInsideWorkspace
+              ? vscode.ConfigurationTarget.Workspace
+              : vscode.ConfigurationTarget.Global
+          );
+        });
+      }
+
+      const commandsToExecute = vscode.workspace
+        .getConfiguration("writerMode")
+        .get<Array<string>>("executeOnActivate");
+
+      if (commandsToExecute) {
+        commandsToExecute.map((command) =>
+          vscode.commands.executeCommand(command)
+        );
+      }
     }
   );
   const deactivateCommand = vscode.commands.registerCommand(
@@ -24,61 +47,32 @@ export function activate(context: vscode.ExtensionContext) {
     () => {
       // Display a message box to the user
       vscode.window.showInformationMessage("Writer mode is off.");
-      vscode.commands.executeCommand("workbench.action.exitZenMode");
-      overrideEditorSettings(undefined, undefined, undefined, undefined);
+
+      if (settingsToBringBack) {
+        const isInsideWorkspace = vscode.workspace.workspaceFolders;
+        const config = vscode.workspace.getConfiguration();
+        settingsToBringBack.map(({ key, setting }) =>
+          config.update(
+            key,
+            setting,
+            isInsideWorkspace
+              ? vscode.ConfigurationTarget.Workspace
+              : vscode.ConfigurationTarget.Global
+          )
+        );
+      }
+
+      const commandsToExecute = vscode.workspace
+        .getConfiguration("writerMode")
+        .get<Array<string>>("executeOnDeactivate");
+
+      if (commandsToExecute) {
+        commandsToExecute.map((command) =>
+          vscode.commands.executeCommand(command)
+        );
+      }
     }
   );
 
   context.subscriptions.push(activateCommand, deactivateCommand);
-}
-
-function overrideEditorSettings(
-  rulersValue?: number[],
-  fontSizeValue?: number,
-  lineHighlightValue?: string,
-  colorHighlightBorder?: string
-) {
-  const config = vscode.workspace.getConfiguration();
-  const isHighlightSettingOn = vscode.workspace
-    .getConfiguration("writerMode")
-    .get("highlightCurrentLine");
-
-  const configObj: Array<{
-    section: string;
-    value: number[] | number | string | undefined | object;
-  }> = [
-    { section: RULERS_SECTION, value: rulersValue },
-    { section: FONTSIZE_SECTION, value: fontSizeValue }
-  ];
-
-  if (isHighlightSettingOn) {
-    configObj.push(
-      {
-        section: LINE_HIGHLIGHT_SECTION,
-        value: lineHighlightValue
-      },
-      {
-        section: COLOR_CUSTOMIZATION_SECTION,
-        value: {
-          "editor.lineHighlightBorder": colorHighlightBorder
-        }
-      }
-    );
-  }
-
-  if (vscode.workspace.workspaceFolders) {
-    // Override default workspace settings
-    configObj.map(obj =>
-      config.update(
-        obj.section,
-        obj.value,
-        vscode.ConfigurationTarget.Workspace
-      )
-    );
-  } else {
-    // Override global settings
-    configObj.map(obj =>
-      config.update(obj.section, obj.value, vscode.ConfigurationTarget.Global)
-    );
-  }
 }
