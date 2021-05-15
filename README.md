@@ -12,16 +12,15 @@ Deactivating works the same way: `cmd+shift+p` and `Writer mode: Deactivate`.
 
 What this extension is doing under the hood:
 
-- activate zen mode
-- increase font size to 20
-- disables VSCode rules
-- highlights current line: to enable set `writerMode.highlightCurrentLine` to `true` in vs code settings
-- customize color of current line highlight by setting `writerMode.highlightBorderColor` to color in hex format - like `#fff`
+- run commands specified in `writerMode.executeOnActivate` while activating extension (by default activate zen mode)
+- override vs code settings specified in `writerMode.overrideSettings`
+  - by default:
+    - increase font size to 20
+    - disables VSCode rules
+    - highlights current line
+- run commands specified in `writerMode.executeOnDeactivate` whil deactivating extension (by default deactivate zen mode)
 
-All those setting changes are first applied to workspace settings and in
-case of not having workspace extension will override global settings.
-
-Deactivating of extension brings back old settings.
+All those setting changes are first applied to workspace settings and in case of not having workspace extension will override global settings.
 
 ## Requirements
 
@@ -34,3 +33,5 @@ This extension is before version 1.0.0 so you may expect bugs.
 ## Release Notes
 
 Please see [CHANGELOG](./CHANGELOG.md)
+
+<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
