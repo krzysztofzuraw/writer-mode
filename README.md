@@ -16,9 +16,9 @@ What this extension is doing under the hood:
 - override vs code settings specified in `writerMode.overrideSettings`
   - by default:
     - increase font size to 20
-    - disables VSCode rules
+    - disables VSCode ruler
     - highlights current line
-- run commands specified in `writerMode.executeOnDeactivate` whil deactivating extension (by default deactivate zen mode)
+- run commands specified in `writerMode.executeOnDeactivate` will deactivating extension (by default deactivate zen mode)
 
 All those setting changes are first applied to workspace settings and in case of not having workspace extension will override global settings.
 
